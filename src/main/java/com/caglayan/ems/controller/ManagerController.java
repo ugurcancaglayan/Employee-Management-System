@@ -1,19 +1,19 @@
 package com.caglayan.ems.controller;
 
 import com.caglayan.ems.model.Manager;
-import com.caglayan.ems.service.impl.ManagerServiceImpl;
-import lombok.AllArgsConstructor;
+import com.caglayan.ems.service.ManagerService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/manager")
 public class ManagerController {
 
-    private final ManagerServiceImpl managerService;
+    private final ManagerService managerService;
 
     @GetMapping
     public ResponseEntity<List<Manager>> getAll() {

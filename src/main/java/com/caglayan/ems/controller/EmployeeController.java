@@ -1,19 +1,19 @@
 package com.caglayan.ems.controller;
 
 import com.caglayan.ems.model.Employee;
-import com.caglayan.ems.service.impl.EmployeeServiceImpl;
-import lombok.AllArgsConstructor;
+import com.caglayan.ems.service.EmployeeService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/employee")
 public class EmployeeController {
 
-    private final EmployeeServiceImpl employeeService;
+    private final EmployeeService employeeService;
 
     @GetMapping
     public ResponseEntity<List<Employee>> getAll() {

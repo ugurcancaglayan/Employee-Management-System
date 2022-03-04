@@ -1,19 +1,19 @@
 package com.caglayan.ems.controller;
 
 import com.caglayan.ems.model.Department;
-import com.caglayan.ems.service.impl.DepartmentServiceImpl;
-import lombok.AllArgsConstructor;
+import com.caglayan.ems.service.DepartmentService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/department")
 public class DepartmentController {
 
-    private final DepartmentServiceImpl departmentService;
+    private final DepartmentService departmentService;
 
     @GetMapping
     public ResponseEntity<List<Department>> getAll() {
