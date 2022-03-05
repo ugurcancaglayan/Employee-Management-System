@@ -1,5 +1,6 @@
 package com.caglayan.ems.service.impl;
 
+import com.caglayan.ems.exception.ApiRequestException;
 import com.caglayan.ems.model.Department;
 import com.caglayan.ems.repository.DepartmentRepository;
 import com.caglayan.ems.service.DepartmentService;
@@ -34,6 +35,11 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     public void deleteDepartment(long id) {
         departmentRepository.deleteById(id);
+    }
+
+    public Department getById(long id) {
+        return departmentRepository.findById(id).orElseThrow(
+                ()-> new ApiRequestException("This id doesn't belong the any department!"));
     }
 
 }
