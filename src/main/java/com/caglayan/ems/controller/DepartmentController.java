@@ -1,6 +1,7 @@
 package com.caglayan.ems.controller;
 
 import com.caglayan.ems.model.Department;
+import com.caglayan.ems.model.dto.DepartmentDto;
 import com.caglayan.ems.service.DepartmentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -21,8 +22,8 @@ public class DepartmentController {
     }
 
     @PostMapping
-    public ResponseEntity<Department> saveDepartment(@RequestBody Department department) {
-        return ResponseEntity.ok(departmentService.saveDepartment(department));
+    public ResponseEntity<Department> saveDepartment(@RequestBody DepartmentDto departmentDto) {
+        return ResponseEntity.ok(departmentService.saveDepartment(departmentDto));
     }
 
     @PutMapping

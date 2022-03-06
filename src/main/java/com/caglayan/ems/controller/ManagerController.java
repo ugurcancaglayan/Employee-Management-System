@@ -1,6 +1,7 @@
 package com.caglayan.ems.controller;
 
 import com.caglayan.ems.model.Manager;
+import com.caglayan.ems.model.dto.ManagerDto;
 import com.caglayan.ems.service.ManagerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -21,8 +22,8 @@ public class ManagerController {
     }
 
     @PostMapping
-    public ResponseEntity<Manager> saveManager(@RequestBody Manager manager) {
-        return ResponseEntity.ok(managerService.saveManager(manager));
+    public ResponseEntity<Manager> saveManager(@RequestBody ManagerDto managerDto) {
+        return ResponseEntity.ok(managerService.saveManager(managerDto));
     }
 
     @DeleteMapping("/{id}")
