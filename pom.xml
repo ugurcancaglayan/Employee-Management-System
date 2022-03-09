@@ -52,6 +52,11 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+            <version>8.5.2</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -66,6 +71,31 @@
                             <artifactId>lombok</artifactId>
                         </exclude>
                     </excludes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>migrate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <driver>org.postgresql.Driver</driver>
+                    <url>jdbc:postgresql://localhost:5432/employee_management_system</url>
+                    <user>postgres</user>
+                    <password>root</password>
+                    <baselineOnMigrate>true</baselineOnMigrate>
+                    <schemas>public</schemas>
+                    <locations>
+                        <location>
+                            filesystem:src/main/resources/db/migration
+                        </location>
+                    </locations>
                 </configuration>
             </plugin>
         </plugins>
