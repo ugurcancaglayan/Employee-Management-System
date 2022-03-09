@@ -1,5 +1,6 @@
 package com.caglayan.ems.model.baseModel;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -13,8 +14,10 @@ public class BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @JsonFormat(pattern = "yyy-mm-dd hh:mm:ss")
     private Date creationDate;
 
+    @JsonFormat(pattern = "yyy-mm-dd hh:mm:ss")
     private Date lastModifiedDate;
 
     @PrePersist
