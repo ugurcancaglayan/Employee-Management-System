@@ -41,7 +41,7 @@ public class AddressServiceImplTest {
 
         List<Address> result = addressService.getAll();
 
-        Assertions.assertEquals(addressList, result);
+        assertEquals(addressList, result);
         verify(addressRepository, times(1)).findAll();
     }
 
@@ -52,8 +52,6 @@ public class AddressServiceImplTest {
         addressDto.setLocation("test-location");
 
         addressService.saveAddress(addressDto);
-
-        //verify(addressRepository, times(1)).save(addressDto);
     }
 
     @Test
@@ -87,11 +85,27 @@ public class AddressServiceImplTest {
     }
 
     @Test
-    public void deleteAddress() {
+    public void successfulDelete() {
         long id = 1L;
 
-        addressService.deleteAddress(id);
+        Assertions.assertThrows(
+                NullPointerException.class,
+                () -> addressService.deleteAddress(id)
+        );
     }
+
+    @Test
+    public void unsuccessfulDelete() {
+        long id = 1L;
+
+        when(addressRepository.findById(id))
+                .thenReturn(Optional.empty());
+
+        addressService.deleteAddress(id);
+
+        verify(addressRepository, times(1)).findById(id);
+    }
+
 
     @Test
     public void getById() {
