@@ -28,12 +28,16 @@ public class ManagerServiceImpl implements ManagerService {
     }
 
     public void deleteManager(long id) {
+        managerRepository.findById(id).orElseThrow(
+                () -> new NullPointerException("This id doesn't belong the any manager!")
+        );
+
         managerRepository.deleteById(id);
     }
 
     public Manager getById(long id) {
         return managerRepository.findById(id).orElseThrow(
-                () -> new NullPointerException("This id doesn't belong the any department!")
+                () -> new NullPointerException("This id doesn't belong the any manager!")
         );
     }
 }

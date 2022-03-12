@@ -48,6 +48,10 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     public void deleteDepartment(long id) {
+        departmentRepository.findById(id).orElseThrow(
+                ()-> new NullPointerException("This id doesn't belong the any department!")
+        );
+
         departmentRepository.deleteById(id);
     }
 

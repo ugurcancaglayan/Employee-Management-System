@@ -7,19 +7,20 @@ import com.caglayan.ems.repository.EmployeeRepository;
 import com.caglayan.ems.service.AddressService;
 import com.caglayan.ems.service.DepartmentService;
 import com.caglayan.ems.service.EmployeeService;
-import com.caglayan.ems.service.ValidationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+import static com.caglayan.ems.util.ValidationUtils.phoneNumberValidation;
+
+
 @RequiredArgsConstructor
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
     private final EmployeeRepository employeeRepository;
-    private final ValidationService validationService;
     private final DepartmentService departmentService;
     private final AddressService addressService;
 
@@ -31,7 +32,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         Department department = departmentService.getById(employeeDto.getDepartmentId());
 
         if (department != null) {
-            if (!validationService.phoneNumberValidation(employeeDto.getPhoneNumber())) {
+            if (!phoneNumberValidation(employeeDto.getPhoneNumber())) {
                 throw new IllegalArgumentException("Phone number's format is not properly!");
             } else {
                 /*if (!addressService.getAll().equals(employeeDto.getAddressList())) {
@@ -62,6 +63,10 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     public void deleteManager(long id) {
+        employeeRepository.findById(id).orElseThrow(
+                ()-> new NullPointerException("This id doesn't belong the any employee!")
+        );
+
         employeeRepository.deleteById(id);
     }
 

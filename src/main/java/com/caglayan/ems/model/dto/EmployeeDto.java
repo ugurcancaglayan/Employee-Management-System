@@ -1,12 +1,16 @@
 package com.caglayan.ems.model.dto;
 
 import com.caglayan.ems.model.Address;
-import lombok.Data;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 public class EmployeeDto {
 
     private String name;

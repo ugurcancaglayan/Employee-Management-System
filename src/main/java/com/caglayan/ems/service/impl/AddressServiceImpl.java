@@ -39,12 +39,16 @@ public class AddressServiceImpl implements AddressService {
     }
 
     public void deleteAddress(long id) {
+        addressRepository.findById(id).orElseThrow(
+                () -> new NullPointerException("This id doesn't belong the any address!")
+        );
+
         addressRepository.deleteById(id);
     }
 
     public Address getById(long id) {
         return addressRepository.findById(id).orElseThrow(
-                () -> new NullPointerException("This id doesn't belong the any department!")
+                () -> new NullPointerException("This id doesn't belong the any address!")
         );
     }
 }

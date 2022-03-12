@@ -1,6 +1,5 @@
-package com.caglayan.ems.service.impl;
+package com.caglayan.ems.util;
 
-import com.caglayan.ems.service.ValidationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -9,9 +8,9 @@ import java.util.regex.Pattern;
 
 @RequiredArgsConstructor
 @Service
-public class ValidationServiceImpl implements ValidationService {
+public class ValidationUtils {
 
-    public <T> boolean phoneNumberValidation(String t) {
+    public static boolean phoneNumberValidation(String t) {
         String patterns
                 = "^0(\\+\\d{1,3}( )?)?((\\(\\d{3}\\))|\\d{3})[- .]?\\d{3}[- .]?\\d{4}$"
                 + "|^(\\+\\d{1,3}( )?)?(\\d{3}[ ]?){2}\\d{3}$"
