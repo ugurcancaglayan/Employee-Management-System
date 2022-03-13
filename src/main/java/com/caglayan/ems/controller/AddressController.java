@@ -2,6 +2,7 @@ package com.caglayan.ems.controller;
 
 import com.caglayan.ems.model.Address;
 import com.caglayan.ems.model.dto.AddressDto;
+import com.caglayan.ems.model.dto.AddressUpdateDto;
 import com.caglayan.ems.service.AddressService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -27,8 +28,8 @@ public class AddressController {
     }
 
     @PutMapping
-    public ResponseEntity<Address> updateAddress(@RequestBody Address address) {
-        return ResponseEntity.ok(addressService.updateAddress(address));
+    public ResponseEntity<Address> updateAddress(@RequestBody AddressUpdateDto addressUpdateDto) {
+        return ResponseEntity.ok(addressService.updateAddress(addressUpdateDto));
     }
 
     @DeleteMapping("/{id}")

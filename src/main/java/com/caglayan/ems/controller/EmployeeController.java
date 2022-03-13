@@ -2,6 +2,7 @@ package com.caglayan.ems.controller;
 
 import com.caglayan.ems.model.Employee;
 import com.caglayan.ems.model.dto.EmployeeDto;
+import com.caglayan.ems.model.dto.EmployeeUpdateDto;
 import com.caglayan.ems.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -27,8 +28,8 @@ public class EmployeeController {
     }
 
     @PutMapping
-    public ResponseEntity<Employee> updateEmployee(@RequestBody Employee employee) {
-        return ResponseEntity.ok(employeeService.updateEmployee(employee));
+    public ResponseEntity<Employee> updateEmployee(@RequestBody EmployeeUpdateDto employeeUpdateDto) {
+        return ResponseEntity.ok(employeeService.updateEmployee(employeeUpdateDto));
     }
 
     @DeleteMapping("/{id}")

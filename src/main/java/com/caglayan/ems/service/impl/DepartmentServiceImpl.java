@@ -3,6 +3,7 @@ package com.caglayan.ems.service.impl;
 import com.caglayan.ems.model.Department;
 import com.caglayan.ems.model.Manager;
 import com.caglayan.ems.model.dto.DepartmentDto;
+import com.caglayan.ems.model.dto.DepartmentUpdateDto;
 import com.caglayan.ems.repository.DepartmentRepository;
 import com.caglayan.ems.service.DepartmentService;
 import com.caglayan.ems.service.ManagerService;
@@ -38,11 +39,16 @@ public class DepartmentServiceImpl implements DepartmentService {
             throw new IllegalArgumentException("Information about the department is incorrect!");
     }
 
-    public Department updateDepartment(Department department) {
-        Optional<Department> oldDepartment = departmentRepository.findById(department.getId());
+    public Department updateDepartment(DepartmentUpdateDto departmentUpdateDto) {
+        Optional<Department> oldDepartment = departmentRepository.findById(departmentUpdateDto.getId());
+        Manager manager = managerService.getById(departmentUpdateDto.getManagerId());
 
         if (oldDepartment.isPresent()) {
-            return departmentRepository.save(department);
+            Department updatedDepartment = oldDepartment.get();
+            updatedDepartment.setName(departmentUpdateDto.getName());
+            updatedDepartment.setDeclaration(departmentUpdateDto.getDeclaration());
+            updatedDepartment.setManager(manager);
+            return departmentRepository.save(updatedDepartment);
         } else
             throw new NullPointerException("Department Not Found");
     }
