@@ -3,6 +3,7 @@ package com.caglayan.ems.service.impl;
 import com.caglayan.ems.model.Department;
 import com.caglayan.ems.model.Manager;
 import com.caglayan.ems.model.dto.DepartmentDto;
+import com.caglayan.ems.model.dto.DepartmentUpdateDto;
 import com.caglayan.ems.repository.DepartmentRepository;
 import com.caglayan.ems.service.ManagerService;
 import org.junit.jupiter.api.Assertions;
@@ -81,8 +82,12 @@ class DepartmentServiceImplTest {
 
     @Test
     void updateDepartment() {
+        DepartmentUpdateDto departmentUpdateDto = new DepartmentUpdateDto();
+        departmentUpdateDto.setId(1);
+        departmentUpdateDto.setManagerId(new Manager().getId());
+
         Department department = new Department();
-        department.setId(1);
+        department.setId(departmentUpdateDto.getId());
         department.setManager(new Manager());
 
         when(departmentRepository.findById(department.getId()))
@@ -91,7 +96,7 @@ class DepartmentServiceImplTest {
         when(departmentRepository.save(department))
                 .thenReturn(department);
 
-        Department updateDepartment = departmentService.updateDepartment(department);
+        Department updateDepartment = departmentService.updateDepartment(departmentUpdateDto);
 
         Assertions.assertEquals(department.getId(), updateDepartment.getId());
 
@@ -105,18 +110,6 @@ class DepartmentServiceImplTest {
                 NullPointerException.class,
                 () -> departmentService.deleteDepartment(id)
         );
-    }
-
-    @Test
-    public void unsuccessfulDelete() {
-        long id = 1L;
-
-        when(departmentRepository.findById(id))
-                .thenReturn(Optional.empty());
-
-        departmentService.deleteDepartment(id);
-
-        verify(departmentRepository, times(1)).findById(id);
     }
 
     @Test

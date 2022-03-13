@@ -2,9 +2,9 @@ package com.caglayan.ems.controller;
 
 import com.caglayan.ems.model.Address;
 import com.caglayan.ems.model.dto.AddressDto;
+import com.caglayan.ems.model.dto.AddressUpdateDto;
 import com.caglayan.ems.service.AddressService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -16,14 +16,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 
-import javax.swing.*;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -88,7 +84,7 @@ class AddressControllerTest {
     @Test
     void updateAddress() throws Exception {
         // given
-        Address address = Address.builder()
+        AddressUpdateDto address = AddressUpdateDto.builder()
                 .title("test-title")
                 .location("test-location")
                 .build();
@@ -99,7 +95,7 @@ class AddressControllerTest {
                 .content(objectMapper.writeValueAsString(address)));
 
         // then
-        ArgumentCaptor<Address> captor = ArgumentCaptor.forClass(Address.class);
+        ArgumentCaptor<AddressUpdateDto> captor = ArgumentCaptor.forClass(AddressUpdateDto.class);
         verify(addressService, times(1)).updateAddress(captor.capture());
         assertThat(captor.getValue().getTitle()).isEqualTo("test-title");
         assertThat(captor.getValue().getLocation()).isEqualTo("test-location");

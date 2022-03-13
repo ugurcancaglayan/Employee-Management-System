@@ -5,6 +5,7 @@ import com.caglayan.ems.model.Department;
 import com.caglayan.ems.model.Employee;
 import com.caglayan.ems.model.Manager;
 import com.caglayan.ems.model.dto.EmployeeDto;
+import com.caglayan.ems.model.dto.EmployeeUpdateDto;
 import com.caglayan.ems.repository.EmployeeRepository;
 import com.caglayan.ems.service.AddressService;
 import com.caglayan.ems.service.DepartmentService;
@@ -109,11 +110,19 @@ class EmployeeServiceImplTest {
 
     @Test
     void updateEmployee() {
-        Employee employee = Employee.builder()
+        EmployeeUpdateDto employeeUpdateDto = EmployeeUpdateDto.builder()
                 .name("test-name")
                 .mail("test-mail")
                 .phoneNumber("05555555555")
-                .address(new ArrayList<Address>())
+                .addressList(new ArrayList<Address>())
+                .departmentId(new Department().getId())
+                .build();
+
+        Employee employee = Employee.builder()
+                .name(employeeUpdateDto.getName())
+                .mail(employeeUpdateDto.getMail())
+                .phoneNumber(employeeUpdateDto.getPhoneNumber())
+                .address(employeeUpdateDto.getAddressList())
                 .department(new Department())
                 .build();
 
@@ -123,7 +132,7 @@ class EmployeeServiceImplTest {
         when(employeeRepository.save(employee))
                 .thenReturn(employee);
 
-        Employee updatedEmployee = employeeService.updateEmployee(employee);
+        Employee updatedEmployee = employeeService.updateEmployee(employeeUpdateDto);
 
         Assertions.assertEquals(employee.getId(), updatedEmployee.getId());
         Assertions.assertEquals(employee.getAddress(), updatedEmployee.getAddress());
@@ -141,15 +150,4 @@ class EmployeeServiceImplTest {
         );
     }
 
-    @Test
-    public void unsuccessfulDelete() {
-        long id = 1L;
-
-        when(employeeRepository.findById(id))
-                .thenReturn(Optional.empty());
-
-        employeeService.deleteManager(id);
-
-        verify(employeeRepository, times(1)).findById(id);
-    }
 }

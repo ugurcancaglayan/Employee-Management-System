@@ -1,10 +1,9 @@
 package com.caglayan.ems.controller;
 
-import com.caglayan.ems.model.Address;
 import com.caglayan.ems.model.Department;
 import com.caglayan.ems.model.Manager;
-import com.caglayan.ems.model.dto.AddressDto;
 import com.caglayan.ems.model.dto.DepartmentDto;
+import com.caglayan.ems.model.dto.DepartmentUpdateDto;
 import com.caglayan.ems.service.DepartmentService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -83,17 +82,17 @@ class DepartmentControllerTest {
 
     @Test
     void updateDepartment() throws Exception {
-        Department department = Department.builder()
+        DepartmentUpdateDto department = DepartmentUpdateDto.builder()
                 .name("IT")
                 .declaration("Developers - South Department")
-                .manager(new Manager())
+                .managerId(new Manager().getId())
                 .build();
 
         ResultActions actions = mockMvc.perform(put("/department")
                 .contentType(CONTENT_TYPE)
                 .content(objectMapper.writeValueAsString(department)));
 
-        ArgumentCaptor<Department> captor = ArgumentCaptor.forClass(Department.class);
+        ArgumentCaptor<DepartmentUpdateDto> captor = ArgumentCaptor.forClass(DepartmentUpdateDto.class);
         verify(departmentService, times(1)).updateDepartment(captor.capture());
         assertEquals(captor.getValue().getId(), department.getId());
         actions.andExpect(status().isOk());

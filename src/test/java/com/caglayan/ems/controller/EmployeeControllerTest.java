@@ -5,9 +5,8 @@ import com.caglayan.ems.model.Department;
 import com.caglayan.ems.model.Employee;
 import com.caglayan.ems.model.Manager;
 import com.caglayan.ems.model.dto.EmployeeDto;
-import com.caglayan.ems.model.dto.ManagerDto;
+import com.caglayan.ems.model.dto.EmployeeUpdateDto;
 import com.caglayan.ems.service.EmployeeService;
-import com.caglayan.ems.service.ManagerService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -101,19 +100,19 @@ class EmployeeControllerTest {
 
     @Test
     void updateEmployee() throws Exception {
-        Employee employee = Employee.builder()
+        EmployeeUpdateDto employee = EmployeeUpdateDto.builder()
                 .name("test-name")
                 .mail("test-mail")
                 .phoneNumber("05555555555")
-                .address(new ArrayList<Address>())
-                .department(new Department())
+                .addressList(new ArrayList<Address>())
+                .departmentId(new Department().getId())
                 .build();
 
         ResultActions actions = mockMvc.perform(put("/employee")
                 .contentType(CONTENT_TYPE)
                 .content(objectMapper.writeValueAsString(employee)));
 
-        ArgumentCaptor<Employee> captor = ArgumentCaptor.forClass(Employee.class);
+        ArgumentCaptor<EmployeeUpdateDto> captor = ArgumentCaptor.forClass(EmployeeUpdateDto.class);
         verify(employeeService, times(1)).updateEmployee(captor.capture());
         assertEquals(captor.getValue().getId(), employee.getId());
         assertEquals(captor.getValue().getPhoneNumber(), employee.getPhoneNumber());

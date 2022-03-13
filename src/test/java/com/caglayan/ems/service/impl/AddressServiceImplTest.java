@@ -2,6 +2,7 @@ package com.caglayan.ems.service.impl;
 
 import com.caglayan.ems.model.Address;
 import com.caglayan.ems.model.dto.AddressDto;
+import com.caglayan.ems.model.dto.AddressUpdateDto;
 import com.caglayan.ems.repository.AddressRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -62,22 +63,26 @@ public class AddressServiceImplTest {
 
         Assertions.assertThrows(
                 NullPointerException.class,
-                () -> addressService.updateAddress(address)
+                () -> addressService.updateAddress(new AddressUpdateDto())
         );
     }
 
     @Test
     public void whenAddressUpdated() {
+        AddressUpdateDto updateAdressDto = new AddressUpdateDto();
+        updateAdressDto.setId(1);
+        updateAdressDto.setTitle("test");
+
         Address address = new Address();
-        address.setId(1);
-        address.setTitle("test");
+        address.setId(updateAdressDto.getId());
+        address.setTitle(updateAdressDto.getTitle());
 
         when(addressRepository.findById(address.getId()))
                 .thenReturn(Optional.of(address));
 
         when(addressRepository.save(address))
                 .thenReturn(address);
-        Address updateAddress = addressService.updateAddress(address);
+        Address updateAddress = addressService.updateAddress(updateAdressDto);
 
         Assertions.assertEquals(address.getId(), updateAddress.getId());
 
@@ -93,19 +98,6 @@ public class AddressServiceImplTest {
                 () -> addressService.deleteAddress(id)
         );
     }
-
-    @Test
-    public void unsuccessfulDelete() {
-        long id = 1L;
-
-        when(addressRepository.findById(id))
-                .thenReturn(Optional.empty());
-
-        addressService.deleteAddress(id);
-
-        verify(addressRepository, times(1)).findById(id);
-    }
-
 
     @Test
     public void getById() {
