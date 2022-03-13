@@ -1,8 +1,13 @@
 /* Create table */
+CREATE SEQUENCE SEQ_MANAGER;
+CREATE SEQUENCE SEQ_DEPARTMENT;
+CREATE SEQUENCE SEQ_EMPLOYEE;
+CREATE SEQUENCE SEQ_ADDRESS;
+
 
 CREATE TABLE public.manager
 (
-    id bigint NOT NULL,
+    id bigint NOT NULL default nextval('SEQ_MANAGER'),
     creation_date timestamp without time zone,
     last_modified_date timestamp without time zone,
     name character varying(255),
@@ -11,7 +16,7 @@ CREATE TABLE public.manager
 
 CREATE TABLE public.department
 (
-    id bigint NOT NULL,
+    id bigint NOT NULL default nextval('SEQ_DEPARTMENT'),
     creation_date timestamp without time zone,
     last_modified_date timestamp without time zone,
     declaration character varying(255),
@@ -22,7 +27,7 @@ CREATE TABLE public.department
 
 CREATE TABLE public.employee
 (
-    id bigint NOT NULL,
+    id bigint NOT NULL default nextval('SEQ_EMPLOYEE'),
     creation_date timestamp without time zone,
     last_modified_date timestamp without time zone,
     mail character varying(255),
@@ -34,7 +39,7 @@ CREATE TABLE public.employee
 
 CREATE TABLE public.address
 (
-    id bigint NOT NULL,
+    id bigint NOT NULL default nextval('SEQ_ADDRESS'),
     creation_date timestamp without time zone,
     last_modified_date timestamp without time zone,
     location character varying(255),
