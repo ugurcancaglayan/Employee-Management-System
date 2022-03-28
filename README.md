@@ -9,7 +9,7 @@
 ## Clone The Application
 First of all, clone this project with the following command.
 ```
-git clone https://github.com/ugurcancaglayan/hrms-backend
+git clone https://github.com/ugurcancaglayan/Employee-Management-System
 ```
 
 ## Database Schema
