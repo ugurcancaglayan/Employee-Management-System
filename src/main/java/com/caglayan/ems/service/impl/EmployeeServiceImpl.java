@@ -73,7 +73,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             throw new NullPointerException("Employee Not Found");
     }
 
-    public void deleteManager(long id) {
+    public void deleteEmployee(long id) {
         employeeRepository.findById(id).orElseThrow(
                 ()-> new NullPointerException("This id doesn't belong the any employee!")
         );
